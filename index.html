@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carta Mágica</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      min-height:100vh;
+      overflow:hidden;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+      position:relative;
+      font-family:'Poppins', sans-serif;
+
+      background:
+      radial-gradient(circle at top, rgba(255,210,120,0.15), transparent 30%),
+      linear-gradient(180deg,#2d0c3f 0%, #4b1866 50%, #1a0725 100%);
+    }
+
+    /* ESTRELAS */
+
+    .estrelas{
+      position:absolute;
+      inset:0;
+      z-index:1;
+    }
+
+    .estrela{
+      position:absolute;
+      width:2px;
+      height:2px;
+      background:white;
+      border-radius:50%;
+      animation:piscar 3s infinite ease-in-out;
+    }
+
+    .estrela:nth-child(1){top:10%;left:20%;}
+    .estrela:nth-child(2){top:15%;left:70%;}
+    .estrela:nth-child(3){top:30%;left:50%;}
+    .estrela:nth-child(4){top:60%;left:15%;}
+    .estrela:nth-child(5){top:70%;left:80%;}
+    .estrela:nth-child(6){top:40%;left:90%;}
+    .estrela:nth-child(7){top:80%;left:35%;}
+    .estrela:nth-child(8){top:20%;left:85%;}
+
+    @keyframes piscar{
+
+      0%,100%{
+        opacity:.2;
+        transform:scale(1);
+      }
+
+      50%{
+        opacity:1;
+        transform:scale(2);
+      }
+    }
+
+    /* LANTERNAS */
+
+    .lanternas{
+      position:absolute;
+      inset:0;
+      overflow:hidden;
+      z-index:2;
+    }
+
+    .lanterna{
+      position:absolute;
+      bottom:-150px;
+      width:42px;
+      height:60px;
+      border-radius:8px;
+
+      background:linear-gradient(to bottom,#ffe08c,#ffb347);
+
+      box-shadow:
+      0 0 20px rgba(255,216,107,.9),
+      0 0 50px rgba(255,216,107,.5);
+
+      animation:subir linear infinite;
+      opacity:.9;
+    }
+
+    .lanterna::before{
+      content:'';
+      position:absolute;
+      width:14px;
+      height:14px;
+      background:#fff7c2;
+      border-radius:50%;
+      top:8px;
+      left:50%;
+      transform:translateX(-50%);
+      filter:blur(2px);
+    }
+
+    .lanterna:nth-child(1){
+      left:8%;
+      animation-duration:14s;
+    }
+
+    .lanterna:nth-child(2){
+      left:28%;
+      animation-duration:18s;
+      animation-delay:2s;
+      transform:scale(.8);
+    }
+
+    .lanterna:nth-child(3){
+      left:50%;
+      animation-duration:13s;
+      animation-delay:4s;
+    }
+
+    .lanterna:nth-child(4){
+      left:72%;
+      animation-duration:17s;
+      animation-delay:1s;
+      transform:scale(1.1);
+    }
+
+    .lanterna:nth-child(5){
+      left:90%;
+      animation-duration:15s;
+      animation-delay:5s;
+      transform:scale(.9);
+    }
+
+    @keyframes subir{
+
+      0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+      }
+
+      10%{
+        opacity:1;
+      }
+
+      100%{
+        transform:translateY(-130vh) rotate(8deg);
+        opacity:0;
+      }
+    }
+
+    /* CARD GERAL */
+
+    .card{
+      position:relative;
+      z-index:10;
+
+      width:100%;
+      max-width:850px;
+
+      border-radius:34px;
+
+      background:rgba(255,255,255,0.08);
+
+      border:1px solid rgba(255,255,255,0.15);
+
+      backdrop-filter:blur(15px);
+
+      box-shadow:
+      0 0 40px rgba(0,0,0,.35),
+      inset 0 0 20px rgba(255,255,255,.04);
+
+      animation:aparecer 1.3s ease;
+    }
+
+    /* LOGIN */
+
+    #login{
+      padding:55px;
+    }
+
+    .titulo{
+      text-align:center;
+      margin-bottom:35px;
+    }
+
+    .titulo h1{
+      font-family:'Great Vibes', cursive;
+      font-size:5rem;
+      color:#ffd86b;
+
+      text-shadow:
+      0 0 15px rgba(255,216,107,.5),
+      0 0 35px rgba(255,216,107,.3);
+    }
+
+    .linha{
+      width:180px;
+      height:2px;
+      margin:14px auto 0;
+      background:linear-gradient(to right, transparent, #ffd86b, transparent);
+    }
+
+    .subtitulo{
+      color:#f8eaff;
+      text-align:center;
+      margin-bottom:25px;
+      line-height:1.8;
+      font-size:1rem;
+    }
+
+    .input-area{
+      display:flex;
+      flex-direction:column;
+      gap:15px;
+    }
+
+    input{
+      width:100%;
+      padding:16px;
+      border:none;
+      outline:none;
+      border-radius:16px;
+      font-size:1rem;
+
+      background:rgba(255,255,255,0.12);
+      color:white;
+
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    input::placeholder{
+      color:#ddd;
+    }
+
+    button{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:16px;
+      cursor:pointer;
+
+      background:linear-gradient(to right,#ffd86b,#ffbf5e);
+
+      color:#4b1866;
+      font-weight:600;
+      font-size:1rem;
+
+      transition:.3s;
+    }
+
+    button:hover{
+      transform:translateY(-2px);
+      box-shadow:0 0 25px rgba(255,216,107,.4);
+    }
+
+    .erro{
+      margin-top:15px;
+      text-align:center;
+      color:#ffb8b8;
+      font-size:.95rem;
+    }
+
+    /* CARTA */
+
+    #carta{
+      display:none;
+      overflow:hidden;
+      position:relative;
+
+      background:
+      linear-gradient(
+        180deg,
+        rgba(255,255,255,0.12),
+        rgba(255,255,255,0.05)
+      );
+
+      border:1px solid rgba(255,255,255,0.18);
+    }
+
+    /* brilho fundo */
+
+    #carta::before{
+      content:'';
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle, rgba(255,216,107,.18), transparent 70%);
+      top:-180px;
+      right:-120px;
+      z-index:0;
+    }
+
+    #carta::after{
+      content:'';
+      position:absolute;
+      width:350px;
+      height:350px;
+      background:radial-gradient(circle, rgba(255,255,255,.06), transparent 70%);
+      bottom:-120px;
+      left:-120px;
+      z-index:0;
+    }
+
+    .conteudo-carta{
+      position:relative;
+      z-index:2;
+      padding:65px;
+    }
+
+    .topo-carta{
+      text-align:center;
+      margin-bottom:45px;
+    }
+
+    .icone-topo{
+      font-size:2rem;
+      display:block;
+      margin-bottom:10px;
+      animation:flutuar 3s ease-in-out infinite;
+    }
+
+    @keyframes flutuar{
+
+      0%,100%{
+        transform:translateY(0);
+      }
+
+      50%{
+        transform:translateY(-6px);
+      }
+    }
+
+    .topo-carta h1{
+      font-family:'Great Vibes', cursive;
+      font-size:5.5rem;
+      color:#ffe08c;
+
+      text-shadow:
+      0 0 15px rgba(255,216,107,.4),
+      0 0 30px rgba(255,216,107,.2);
+    }
+
+    .subtitulo-carta{
+      display:block;
+      margin-top:16px;
+
+      color:#f5e9ff;
+      font-size:1rem;
+      letter-spacing:1px;
+      opacity:.9;
+    }
+
+    .texto{
+      position:relative;
+      max-width:650px;
+      margin:auto;
+    }
+
+    .texto p{
+      color:#fff7ff;
+      font-size:1.12rem;
+      line-height:2.25;
+      margin-bottom:28px;
+      font-weight:300;
+      text-align:center;
+
+      opacity:0;
+      animation:fadeTexto 1s forwards;
+    }
+
+    .texto p:nth-child(1){animation-delay:.2s;}
+    .texto p:nth-child(2){animation-delay:.4s;}
+    .texto p:nth-child(3){animation-delay:.6s;}
+    .texto p:nth-child(4){animation-delay:.8s;}
+    .texto p:nth-child(5){animation-delay:1s;}
+    .texto p:nth-child(6){animation-delay:1.2s;}
+    .texto p:nth-child(7){animation-delay:1.4s;}
+
+    @keyframes fadeTexto{
+
+      from{
+        opacity:0;
+        transform:translateY(18px);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .assinatura{
+      margin-top:50px;
+      text-align:right;
+      font-family:'Great Vibes', cursive;
+      font-size:2.8rem;
+      color:#ffd86b;
+
+      text-shadow:0 0 15px rgba(255,216,107,.3);
+    }
+
+    /* detalhes decorativos */
+
+    .detalhe{
+      position:absolute;
+      border-radius:50%;
+      filter:blur(2px);
+      opacity:.5;
+      z-index:1;
+    }
+
+    .det1{
+      width:14px;
+      height:14px;
+      background:#ffe08c;
+      top:80px;
+      left:70px;
+    }
+
+    .det2{
+      width:8px;
+      height:8px;
+      background:#ffffff;
+      top:160px;
+      right:100px;
+    }
+
+    .det3{
+      width:10px;
+      height:10px;
+      background:#ffd86b;
+      bottom:120px;
+      left:120px;
+    }
+
+    /* ANIMAÇÃO */
+
+    @keyframes aparecer{
+
+      from{
+        opacity:0;
+        transform:translateY(40px) scale(.95);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    /* RESPONSIVO */
+
+    @media(max-width:768px){
+
+      body{
+        padding:15px;
+        overflow:auto;
+      }
+
+      #login{
+        padding:35px 24px;
+      }
+
+      .conteudo-carta{
+        padding:40px 25px;
+      }
+
+      .titulo h1,
+      .topo-carta h1{
+        font-size:3.6rem;
+      }
+
+      .linha{
+        width:120px;
+      }
+
+      .texto p{
+        font-size:.98rem;
+        line-height:2;
+      }
+
+      .assinatura{
+        font-size:2.2rem;
+      }
+
+      .lanterna{
+        width:30px;
+        height:45px;
+      }
+    }
+
+    @media(max-width:480px){
+
+      .card{
+        border-radius:26px;
+      }
+
+      #login{
+        padding:28px 20px;
+      }
+
+      .conteudo-carta{
+        padding:35px 20px;
+      }
+
+      .titulo h1,
+      .topo-carta h1{
+        font-size:2.9rem;
+      }
+
+      .texto p{
+        font-size:.92rem;
+        line-height:1.95;
+      }
+
+      .assinatura{
+        font-size:1.9rem;
+      }
+
+      input,
+      button{
+        padding:13px;
+        font-size:.95rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ESTRELAS -->
+
+  <div class="estrelas">
+    <span class="estrela"></span>
+    <span class="estrela"></span>
+    <span class="estrela"></span>
+    <span class="estrela"></span>
+    <span class="estrela"></span>
+    <span class="estrela"></span>
+    <span class="estrela"></span>
+    <span class="estrela"></span>
+  </div>
+
+  <!-- LANTERNAS -->
+
+  <div class="lanternas">
+    <div class="lanterna"></div>
+    <div class="lanterna"></div>
+    <div class="lanterna"></div>
+    <div class="lanterna"></div>
+    <div class="lanterna"></div>
+  </div>
+
+  <!-- LOGIN -->
+
+  <div class="card" id="login">
+
+    <div class="titulo">
+      <h1>Lanterna Secreta</h1>
+      <div class="linha"></div>
+    </div>
+
+    <div class="subtitulo">
+      Apenas quem conhece a senha mágica
+      pode abrir esta carta.
+    </div>
+
+    <div class="input-area">
+
+      <input
+        type="password"
+        id="senha"
+        placeholder="Digite a senha..."
+      >
+
+      <button onclick="abrirCarta()">
+        Abrir Carta
+      </button>
+
+    </div>
+
+    <div class="erro" id="erro"></div>
+
+  </div>
+
+  <!-- CARTA -->
+
+  <div class="card" id="carta">
+
+    <div class="detalhe det1"></div>
+    <div class="detalhe det2"></div>
+    <div class="detalhe det3"></div>
+
+    <div class="conteudo-carta">
+
+      <div class="topo-carta">
+
+        <span class="icone-topo">✨</span>
+
+        <h1>Para Você</h1>
+
+        <div class="linha"></div>
+
+        <span class="subtitulo-carta">
+          “E finalmente vejo a luz brilhar...”
+        </span>
+
+      </div>
+
+      <div class="texto">
+
+        <p>
+          Existem pessoas que aparecem na nossa vida
+          da mesma forma que milhares de lanternas
+          iluminando o céu pela primeira vez:
+          silenciosamente…
+          mas deixando tudo inesquecível.
+        </p>
+
+        <p>
+          E entre tantos dias comuns,
+          você conseguiu transformar momentos simples
+          em algo que parece cena de filme.
+        </p>
+
+        <p>
+          Como se o mundo desacelerasse por alguns segundos,
+          como se as estrelas ficassem mais próximas,
+          como se finalmente tudo fizesse sentido.
+        </p>
+
+        <p>
+          Talvez seja isso que acontece
+          quando encontramos alguém especial:
+          o coração começa a enxergar luz
+          onde antes não existia.
+        </p>
+
+        <p>
+          Se eu pudesse guardar um momento para sempre,
+          escolheria aquele instante calmo
+          em que o céu fica dourado,
+          as lanternas sobem devagar
+          e tudo parece mágico só porque você está ali.
+        </p>
+
+        <p>
+          Porque algumas pessoas não apenas passam pela nossa vida.
+          Elas iluminam ela.
+        </p>
+
+        <p>
+          E mesmo que o tempo continue seguindo,
+          algumas memórias permanecem brilhando
+          como pequenas luzes no escuro.
+        </p>
+
+      </div>
+
+      <div class="assinatura">
+        Com carinho ✨
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    function abrirCarta(){
+
+      const senha =
+      document.getElementById("senha").value;
+
+      if(senha === "rapunzel"){
+
+        document.getElementById("login").style.display = "none";
+
+        document.getElementById("carta").style.display = "block";
+
+      }else{
+
+        document.getElementById("erro").innerText =
+        "Essa não é a senha mágica...";
+      }
+    }
+
+    // ENTER PRA ABRIR
+
+    document
+    .getElementById("senha")
+    .addEventListener("keypress", function(e){
+
+      if(e.key === "Enter"){
+        abrirCarta();
+      }
+    });
+
+  </script>
+
+</body>
+</html>
